@@ -1,0 +1,58 @@
+<%- include('header'); -%>
+
+<style>
+  .my-form {
+    visibility: hidden;
+  }
+
+  .show {
+    visibility: visible;
+  }
+</style>
+
+<h1>Let's do it!</h1>
+
+<div class="container">
+  <% if(goals){ %>
+  <% goals.forEach(function(e){ %>
+  <% console.log(e.taskName) %>
+  <div style="padding: 20px; margin: 20px; height: 100px; width: 200px; border: 1px solid silver">
+    <%= e.taskName %>
+    <hr>
+    Days Remaining <%= e.daysNeeded %>
+  </div>
+  <%  }) %>
+  <% } %>
+</div>
+
+
+<button onClick="toggleForm()">Add New Task</button>
+
+<div class="container my-form" id="hidden">
+  <form class="action-form" action="/dashboard" method="post">
+    What do you want to do?
+    <input type="text" name="taskName" placeholder="">
+    How many days do you need?
+    <input type="text" name="daysNeeded" placeholder="">
+    How will you track it?
+    <select name="tracker">
+      <option value="photo">photo</option>
+      <option value="reflection">reflection</option>
+      <option value="other">other</option>
+    </select>
+    How often should we check in?
+    <select name="frequency">
+      <option value="weekly">Weekly</option>
+      <option value="daily">Daily</option>
+      <option value="monthly">Monthly</option>
+    </select>
+    <button type="submit">Let's get started!</button>
+  </form>
+</div>
+
+<script>
+  function toggleForm() {
+    var newGoalForm = document.getElementById("hidden");
+    newGoalForm.classList.toggle("show");
+  }
+</script>

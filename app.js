@@ -2,13 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const app = express();
+const mongoose = require('mongoose');
 const port = 3000;
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
-const goals = [];
+mongoose.connect("mongodb://localhost:27017/tasksDB", {useNewUrlParser:true});
+
+const goalSchema = new mongoose.Schema ({
+  goalName: String,
+  daysNeeded: Number,
+  dateCreated: Date
+})
+
+const Goal = mongoose.model("Goal", goalSchema);
 
 app.listen(port, function(req, res){
   console.log("Listening on port 3000");
@@ -19,29 +28,41 @@ app.get('/', function(req, res){
 })
 
 app.get('/dashboard', function(req, res){
-  res.render('dashboard', {
-    goals: goals,
-    todaysDate: new Date()
+  Goal.find(function(err, goals){
+    if(!err){
+      res.render('dashboard', {
+        goals: goals,
+        todaysDate: new Date()
+      });
+    }
   });
 })
 
+app.post('/delete', function(req, res){
+  console.log(req.body.goalName);
+  Goal.deleteOne({
+    goalName: req.body.goalName
+  }, function(err){
+    if(!err){
+      console.log('deleted the item')
+      res.redirect('/dashboard');
+    } else {
+      console.log('could not delete');
+    }
+  })
+})
+
 app.post('/dashboard', function(req, res){
-  let taskName = req.body.taskName;
+  let goalName = req.body.goalName;
   let daysNeeded = req.body.daysNeeded;
-  let tracker = req.body.tracker;
-  let frequency = req.body.frequency;
   let currentDate = new Date();
 
-  let goal = {
-    taskName: taskName,
+  const goal = new Goal({
+    goalName: goalName,
     daysNeeded: daysNeeded,
-    trackingMethod: tracker,
     dateCreated: currentDate,
-    checkInFrequency: frequency
-  }
+  });
 
-  console.log(goal);
-
-  goals.push(goal);
+  goal.save();
   res.redirect('/dashboard');
 })

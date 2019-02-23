@@ -14,7 +14,8 @@ mongoose.connect("mongodb://localhost:27017/tasksDB", {useNewUrlParser:true});
 const goalSchema = new mongoose.Schema ({
   goalName: String,
   daysNeeded: Number,
-  dateCreated: Date
+  dateCreated: Date,
+  completed: Boolean
 })
 
 const Goal = mongoose.model("Goal", goalSchema);
@@ -61,6 +62,7 @@ app.post('/dashboard', function(req, res){
     goalName: goalName,
     daysNeeded: daysNeeded,
     dateCreated: currentDate,
+    completed: false
   });
 
   goal.save();

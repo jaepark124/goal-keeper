@@ -1,20 +1,35 @@
-.my-form {
-  padding: 50px;
-}
-
 a {
   text-decoration: none;
   color: #000;
 }
 
+.my-form {
+  padding: 50px;
+}
+
+.incomplete {
+  color: blue;
+}
+
+.success {
+  color: green;
+}
+
 .goal-panel {
+  border: 1px solid silver;
   padding: 20px;
   margin: 20px;
-  height: 100px;
-  width: 200px;
-  border: 1px solid silver
 }
 
 .goal-panel:hover {
   border: 1px solid blue;
+}
+
+.goal-panel-row {
+  margin-top: 50px;
+  border: 1px solid black;
+}
+
+.my-form {
+  border: 1px solid black;
 }

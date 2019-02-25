@@ -25,13 +25,13 @@ app.listen(port, function(req, res){
 })
 
 app.get('/', function(req, res){
-  res.render('home');
+  res.redirect('/goals');
 })
 
-app.get('/dashboard', function(req, res){
+app.get('/goals', function(req, res){
   Goal.find(function(err, goals){
     if(!err){
-      res.render('dashboard', {
+      res.render('goals', {
         goals: goals,
         todaysDate: new Date()
       });
@@ -45,15 +45,14 @@ app.post('/delete', function(req, res){
     goalName: req.body.goalName
   }, function(err){
     if(!err){
-      console.log('deleted the item')
-      res.redirect('/dashboard');
+      res.redirect('/goals');
     } else {
-      console.log('could not delete');
+      console.log('Could not delete.');
     }
   })
 })
 
-app.post('/dashboard', function(req, res){
+app.post('/goals', function(req, res){
   let goalName = req.body.goalName;
   let daysNeeded = req.body.daysNeeded;
   let currentDate = new Date();
@@ -66,5 +65,5 @@ app.post('/dashboard', function(req, res){
   });
 
   goal.save();
-  res.redirect('/dashboard');
+  res.redirect('/goals');
 })

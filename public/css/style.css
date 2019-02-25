@@ -8,9 +8,13 @@ a {
 }
 
 body {
-  background-color: #FF6978 !important;
+  background-color: #FF6978!important;
   padding: 100px;
+  height:100vh;
+  margin:0;
+  /* background-image: -webkit-linear-gradient(60deg, #FF6978 50%, gainsboro 50%); */
 }
+
 
 .my-form {
   display: none;
@@ -22,10 +26,12 @@ body {
   color: #fff;
   top: 0;
   right: 0;
+  transition: max-height 2000ms ease-in-out;
 }
 
 .show {
   display: block;
+  max-height: 999em;
 }
 
 .add-button {
@@ -55,6 +61,7 @@ body {
   border: 1px solid silver;
   padding: 20px;
   margin: 20px;
+  height: 320px;
 }
 
 .goal-delete {
@@ -81,6 +88,17 @@ body {
 .my-form label {
   letter-spacing: 2px;
   margin-top: 20px;
+}
+
+.my-form input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.bottom-column {
+  text-align: center;
 }
 
 .form-button:hover {
